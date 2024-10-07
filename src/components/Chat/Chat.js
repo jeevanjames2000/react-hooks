@@ -5,6 +5,32 @@ import ChatFooter from "./ChatFooter";
 import { Box } from "@mui/material";
 
 const Chat = () => {
+  const [text, setText] = useState("Hello, World!");
+
+  const handlePrint = async () => {
+    try {
+      const response = await fetch("https://sports1.gitam.edu/print", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.text();
+      console.log(result);
+      alert("Print successful: " + result);
+    } catch (error) {
+      console.error("Error printing:", error);
+      alert("Print failed: " + error.message);
+    }
+  };
   return (
     <Box
       sx={{
@@ -15,9 +41,14 @@ const Chat = () => {
         borderRadius: "10px",
       }}
     >
-      <ChatHeader />
+      {/* <ChatHeader />
       <ChatBody />
-      <ChatFooter />
+      <ChatFooter /> */}
+      <div style={{ padding: "20px" }}>
+        <h1>Print Receipt</h1>
+
+        <button onClick={handlePrint}>Print</button>
+      </div>
     </Box>
   );
 };
