@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PrintComponent = () => {
+const Print = () => {
   const [text, setText] = useState("Hello, World!");
 
   const handlePrint = async () => {
@@ -37,4 +37,4 @@ const PrintComponent = () => {
   );
 };
 
-export default PrintComponent;
+export default Print;

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Reacthooks from "./components/Reacthooks";
 import Chat from "./components/Chat/Chat";
-import PrintComponent from "./components/Print/Print";
+import Print from "./components/Print/Print";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Chat />} />
           <Route path="/Reacthooks" element={<Reacthooks />} />
-          <Route path="/Print" element={<PrintComponent />} />
+          <Route path="/Print" element={<Print />} />
         </Routes>
       </Router>
     </>
