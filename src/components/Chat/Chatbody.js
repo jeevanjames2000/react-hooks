@@ -2,27 +2,20 @@ import { Box, Grid2, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addReceivedMessage } from "../../utils/Chatslice";
-import { io } from "socket.io-client";
 
-const ChatBody = () => {
+const ChatBody = ({ socket }) => {
+  console.log("socket: ", socket);
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
-  const [currentSocketId, setCurrentSocketId] = useState(null);
   const sentMessages = useSelector((state) => state.chat.sentMessages);
   const receivedMessages = useSelector((state) => state.chat.receivedMessages);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:2021");
-    setSocket(newSocket);
+    const currentSocketId = socket.id;
 
-    newSocket.on("connect", () => {
-      setCurrentSocketId(newSocket.id); // Store current user's socket ID
-    });
-
-    newSocket.on("receive_message", (message) => {
+    socket.on("chat message", (message) => {
       if (message && message.text) {
-        // Check if the message is from another user
+        // Add received message to Redux store and update local state
         if (message.sender !== currentSocketId) {
           dispatch(addReceivedMessage(message));
         }
@@ -35,20 +28,23 @@ const ChatBody = () => {
       }
     });
 
-    return () => newSocket.disconnect();
-  }, []);
+    return () => {
+      socket.off("chat message");
+    };
+  }, [socket, dispatch]);
 
+  // Handle adding sent messages to the local message state
   useEffect(() => {
     if (sentMessages.length > 0) {
       const lastSentMessage = sentMessages[sentMessages.length - 1];
       if (lastSentMessage && lastSentMessage.text) {
         setMessages((prev) => [
           ...prev,
-          { text: lastSentMessage.text, sender: currentSocketId },
+          { text: lastSentMessage.text, sender: socket.id },
         ]);
       }
     }
-  }, []);
+  }, [sentMessages, socket]);
 
   return (
     <Box
@@ -68,7 +64,7 @@ const ChatBody = () => {
           key={index}
           container
           justifyContent={
-            message.sender === currentSocketId ? "flex-end" : "flex-start" // Sent messages on right, received on left
+            message.sender === socket.id ? "flex-end" : "flex-start"
           }
           sx={{ marginBottom: "1rem" }}
         >
@@ -77,11 +73,11 @@ const ChatBody = () => {
               maxWidth: "60%",
               padding: "0.5rem 1rem",
               backgroundColor:
-                message.sender === currentSocketId ? "#B7E0FF" : "#D2E0FB", // Different color for sent and received messages
+                message.sender === socket.id ? "#B7E0FF" : "#D2E0FB",
               borderRadius:
-                message.sender === currentSocketId
-                  ? "10px 10px 0 10px" // Sent message styling
-                  : "10px 10px 10px 0", // Received message styling
+                message.sender === socket.id
+                  ? "10px 10px 0 10px"
+                  : "10px 10px 10px 0",
               wordWrap: "break-word",
             }}
           >

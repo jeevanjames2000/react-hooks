@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChatBody from "./Chatbody";
 import ChatHeader from "./Chatheader";
 import ChatFooter from "./ChatFooter";
 import { Box } from "@mui/material";
+import { io } from "socket.io-client";
 
 const Chat = () => {
-  const [text, setText] = useState("Hello, World!");
+  const [socket, setSocket] = useState(null);
+  console.log("socket: ", socket);
 
-  const handlePrint = async () => {
-    window.print();
-  };
+  useEffect(() => {
+    const newSocket = io("http://localhost:2021");
+    console.log("newSocket: ", newSocket);
+    setSocket(newSocket);
+  }, []);
   return (
     <Box
       sx={{
@@ -20,14 +24,9 @@ const Chat = () => {
         borderRadius: "10px",
       }}
     >
-      {/* <ChatHeader />
-      <ChatBody />
-      <ChatFooter /> */}
-      <div style={{ padding: "20px" }}>
-        <h1>Print Receipt</h1>
-
-        <button onClick={handlePrint}>Print</button>
-      </div>
+      <ChatHeader />
+      <ChatBody socket={socket} />
+      <ChatFooter socket={socket} />
     </Box>
   );
 };

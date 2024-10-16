@@ -5,23 +5,18 @@ import {
   Box,
   Grid2,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addSentMessage } from "../../utils/Chatslice";
-import { io } from "socket.io-client";
-const ChatFooter = () => {
+
+const ChatFooter = ({ socket }) => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
-  const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
-    const newSocket = io("http://localhost:2021");
-    setSocket(newSocket);
-    return () => newSocket.disconnect();
-  }, []);
   const handleSend = () => {
-    if (inputValue.trim()) {
+    if (inputValue.trim() && socket) {
+      // Check if socket is initialized
       const message = {
         text: inputValue,
         sender: socket.id,
@@ -29,10 +24,13 @@ const ChatFooter = () => {
       if (socket.id === message.sender) {
         dispatch(addSentMessage(inputValue));
       }
-      socket.emit("sendMessage", message);
+      socket.emit("chat message", message);
       setInputValue("");
+    } else {
+      console.error("Socket is not connected or message is empty");
     }
   };
+
   return (
     <Box
       sx={{
@@ -65,4 +63,5 @@ const ChatFooter = () => {
     </Box>
   );
 };
+
 export default ChatFooter;
