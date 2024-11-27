@@ -9,7 +9,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<RazorPay />} />
+          {/* <Route path="/" element={<RazorPay />} /> */}
           <Route path="/chat" element={<Chat />} />
           <Route path="/Reacthooks" element={<Reacthooks />} />
           <Route path="/Print" element={<Print />} />
