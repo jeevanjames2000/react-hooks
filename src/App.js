@@ -5,6 +5,7 @@ import Print from "./components/Print/Print";
 import RazorPay from "./components/Payments/RazorPay";
 import Accordion from "./components/Accordion";
 import TableComponent from "./components/TablePagination";
+import SearchableTable from "./components/SearchUsingVoice";
 
 function App() {
   function Div() {
@@ -125,6 +126,7 @@ function App() {
           />
           <Route path="/Reacthooks" element={<Reacthooks />} />
           <Route path="/Print" element={<Print />} />
+          <Route path="/voice" element={<SearchableTable />} />
         </Routes>
       </Router>
     </>
