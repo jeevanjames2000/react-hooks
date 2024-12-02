@@ -1,11 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import Reacthooks from "./components/Reacthooks";
 import Chat from "./components/Chat/Chat";
 import Print from "./components/Print/Print";
-import RazorPay from "./components/Payments/RazorPay";
+import EventBubbling from "./components/Payments/EventBubbling";
 import Accordion from "./components/Accordion";
 import TableComponent from "./components/TablePagination";
 import SearchableTable from "./components/SearchUsingVoice";
+import GoogleSign from "./Auth/GoogleSignin";
+import ReactTransitionGroup from "./components/ReactTransitionGroup";
+import ProgressiveImage from "./components/ProgressiveImage";
 
 function App() {
   function Div() {
@@ -111,9 +119,9 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<RazorPay />} />
-          <Route path="/chat" element={<Chat />} />
-
+          <Route path="/" element={<GoogleSign />} />
+          <Route path="/EventBubbling" element={<EventBubbling />} />
+          {/* <Route path="/chat" element={<Chat />} /> */}
           <Route
             path="/Accordion"
             element={<Accordion title={"Custom Accordion"} content={Div()} />}
@@ -124,9 +132,13 @@ function App() {
               <TableComponent data={data} columns={columns} rowsPerPage={10} />
             }
           />
+          {/* <Route path="/Google" element={<GoogleLogin />} /> */}
+
           <Route path="/Reacthooks" element={<Reacthooks />} />
           <Route path="/Print" element={<Print />} />
           <Route path="/voice" element={<SearchableTable />} />
+          <Route path="/ReactTransition" element={<ReactTransitionGroup />} />
+          <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
         </Routes>
       </Router>
     </>

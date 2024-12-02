@@ -60,7 +60,6 @@ const SearchableTable = () => {
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
       <h2>Voice Search</h2>
-
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <input
           type="text"
@@ -69,6 +68,7 @@ const SearchableTable = () => {
           onChange={handleTextSearch}
           style={{ padding: "10px", width: "300px", borderRadius: "5px" }}
         />
+
         <button
           onClick={handleVoiceSearch}
           style={{

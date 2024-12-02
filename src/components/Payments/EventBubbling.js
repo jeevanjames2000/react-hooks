@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
-export default function RazorPay() {
+export default function EventBubbling() {
   const [state, setState] = useState({
     childColor: "red",
     parentColor: "green",
