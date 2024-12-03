@@ -18,6 +18,8 @@ import AutoComplete from "./components/AutoComplete";
 import FileExplorer from "./components/FileExplorer";
 import VirtualizedList from "./components/VirtualizedList";
 import TrafficLight from "./components/SignalLights";
+import Clock from "./components/digitalClock";
+import JobPostings from "./components/JobPostings";
 
 function App() {
   function Div() {
@@ -147,6 +149,8 @@ function App() {
           <Route path="/fileExplorer" element={<FileExplorer />} />
           <Route path="/virtualList" element={<VirtualizedList />} />
           <Route path="/trafficLights" element={<TrafficLight />} />
+          <Route path="/digitalClock" element={<Clock />} />
+          <Route path="/jobPostings" element={<JobPostings />} />
         </Routes>
       </Router>
     </>
