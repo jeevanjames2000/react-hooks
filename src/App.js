@@ -14,6 +14,10 @@ import SearchableTable from "./components/SearchUsingVoice";
 import GoogleSign from "./Auth/GoogleSignin";
 import ReactTransitionGroup from "./components/ReactTransitionGroup";
 import ProgressiveImage from "./components/ProgressiveImage";
+import AutoComplete from "./components/AutoComplete";
+import FileExplorer from "./components/FileExplorer";
+import VirtualizedList from "./components/VirtualizedList";
+import TrafficLight from "./components/SignalLights";
 
 function App() {
   function Div() {
@@ -139,6 +143,10 @@ function App() {
           <Route path="/voice" element={<SearchableTable />} />
           <Route path="/ReactTransition" element={<ReactTransitionGroup />} />
           <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
+          <Route path="/autoComplete" element={<AutoComplete />} />
+          <Route path="/fileExplorer" element={<FileExplorer />} />
+          <Route path="/virtualList" element={<VirtualizedList />} />
+          <Route path="/trafficLights" element={<TrafficLight />} />
         </Routes>
       </Router>
     </>
