@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   useNavigate,
+  Link,
 } from "react-router-dom";
 import Reacthooks from "./components/Reacthooks";
 import Chat from "./components/Chat/Chat";
@@ -20,6 +21,12 @@ import VirtualizedList from "./components/VirtualizedList";
 import TrafficLight from "./components/SignalLights";
 import Clock from "./components/digitalClock";
 import JobPostings from "./components/JobPostings";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ReactQuery from "./components/reactQuery";
+import axios from "axios";
+import PreFetch from "./components/PreFetch";
+import SWR from "./components/preFetchSWR";
 
 function App() {
   function Div() {
@@ -121,38 +128,64 @@ function App() {
     { id: 30, col1: "good vibes", col2: "positive energy", col3: "happy days" },
   ];
 
+  const queryClient = new QueryClient();
+
+  const fetchJobPostings = async () => {
+    const { data } = await axios.get("https://api.example.com/job-postings");
+    return data;
+  };
+
+  const prefetchJobPostings = () => {
+    queryClient.prefetchQuery(["preFetch"], fetchJobPostings, {
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 10,
+    });
+  };
+
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<GoogleSign />} />
-          <Route path="/EventBubbling" element={<EventBubbling />} />
-          {/* <Route path="/chat" element={<Chat />} /> */}
-          <Route
-            path="/Accordion"
-            element={<Accordion title={"Custom Accordion"} content={Div()} />}
-          />
-          <Route
-            path="/Table"
-            element={
-              <TableComponent data={data} columns={columns} rowsPerPage={10} />
-            }
-          />
-          {/* <Route path="/Google" element={<GoogleLogin />} /> */}
-
-          <Route path="/Reacthooks" element={<Reacthooks />} />
-          <Route path="/Print" element={<Print />} />
-          <Route path="/voice" element={<SearchableTable />} />
-          <Route path="/ReactTransition" element={<ReactTransitionGroup />} />
-          <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
-          <Route path="/autoComplete" element={<AutoComplete />} />
-          <Route path="/fileExplorer" element={<FileExplorer />} />
-          <Route path="/virtualList" element={<VirtualizedList />} />
-          <Route path="/trafficLights" element={<TrafficLight />} />
-          <Route path="/digitalClock" element={<Clock />} />
-          <Route path="/jobPostings" element={<JobPostings />} />
-        </Routes>
-      </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <nav>
+            <Link to="/preFetch" onMouseEnter={prefetchJobPostings}>
+              Go to Prefetch Component
+            </Link>
+          </nav>
+          <Routes>
+            <Route path="/" element={<GoogleSign />} />
+            <Route path="/EventBubbling" element={<EventBubbling />} />
+            <Route
+              path="/Accordion"
+              element={<Accordion title={"Custom Accordion"} content={Div()} />}
+            />
+            <Route
+              path="/Table"
+              element={
+                <TableComponent
+                  data={data}
+                  columns={columns}
+                  rowsPerPage={10}
+                />
+              }
+            />
+            <Route path="/Reacthooks" element={<Reacthooks />} />
+            <Route path="/Print" element={<Print />} />
+            <Route path="/voice" element={<SearchableTable />} />
+            <Route path="/ReactTransition" element={<ReactTransitionGroup />} />
+            <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
+            <Route path="/autoComplete" element={<AutoComplete />} />
+            <Route path="/fileExplorer" element={<FileExplorer />} />
+            <Route path="/virtualList" element={<VirtualizedList />} />
+            <Route path="/trafficLights" element={<TrafficLight />} />
+            <Route path="/digitalClock" element={<Clock />} />
+            <Route path="/jobPostings" element={<JobPostings />} />
+            <Route path="/reactQuery" element={<ReactQuery />} />
+            <Route path="/preFetch" element={<PreFetch />} />
+            <Route path="/preFetchSWR" element={<SWR />} />
+          </Routes>
+        </Router>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   );
 }
