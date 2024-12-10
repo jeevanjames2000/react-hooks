@@ -44,6 +44,30 @@ export default function FileExplorer() {
         },
       ],
     },
+    {
+      id: 10,
+      name: "Desktop",
+      children: [
+        {
+          id: 11,
+          name: "unnamed.txt",
+        },
+        {
+          id: 12,
+          name: "Fav",
+          children: [
+            {
+              id: 13,
+              name: "foo.txt",
+            },
+            {
+              id: 14,
+              name: "bar.txt",
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   const [d, setD] = useState([]);

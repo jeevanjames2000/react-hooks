@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const fetchJobPostings = async () => {
   const { data } = await axios.get(
     "https://jsonplaceholder.typicode.com/posts"
@@ -30,6 +31,7 @@ export default function PreFetch() {
           </li>
         ))}
       </ul>
+      <ReactQueryDevtools initialIsOpen={false} />
     </div>
   );
 }

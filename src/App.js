@@ -27,6 +27,7 @@ import ReactQuery from "./components/reactQuery";
 import axios from "axios";
 import PreFetch from "./components/PreFetch";
 import SWR from "./components/preFetchSWR";
+import Main from "./Main";
 
 function App() {
   function Div() {
@@ -146,13 +147,10 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Router>
-          <nav>
-            <Link to="/preFetch" onMouseEnter={prefetchJobPostings}>
-              Go to Prefetch Component
-            </Link>
-          </nav>
           <Routes>
-            <Route path="/" element={<GoogleSign />} />
+            <Route path="/" element={<Main />} />
+
+            <Route path="/googleSignIn" element={<GoogleSign />} />
             <Route path="/EventBubbling" element={<EventBubbling />} />
             <Route
               path="/Accordion"
@@ -184,7 +182,6 @@ function App() {
             <Route path="/preFetchSWR" element={<SWR />} />
           </Routes>
         </Router>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
