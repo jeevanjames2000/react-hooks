@@ -28,6 +28,7 @@ import axios from "axios";
 import PreFetch from "./components/PreFetch";
 import SWR from "./components/preFetchSWR";
 import Main from "./Main";
+import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   function Div() {
@@ -128,6 +129,15 @@ function App() {
     },
     { id: 30, col1: "good vibes", col2: "positive energy", col3: "happy days" },
   ];
+  const ErrorFallback = (error) => {
+    console.log("error: ", error);
+    return (
+      <div>
+        <h2>Something went wrong.</h2>
+        <p>{error.message}</p>
+      </div>
+    );
+  };
 
   const queryClient = new QueryClient();
 
@@ -145,44 +155,51 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Main />} />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Main />} />
 
-            <Route path="/googleSignIn" element={<GoogleSign />} />
-            <Route path="/EventBubbling" element={<EventBubbling />} />
-            <Route
-              path="/Accordion"
-              element={<Accordion title={"Custom Accordion"} content={Div()} />}
-            />
-            <Route
-              path="/Table"
-              element={
-                <TableComponent
-                  data={data}
-                  columns={columns}
-                  rowsPerPage={10}
-                />
-              }
-            />
-            <Route path="/Reacthooks" element={<Reacthooks />} />
-            <Route path="/Print" element={<Print />} />
-            <Route path="/voice" element={<SearchableTable />} />
-            <Route path="/ReactTransition" element={<ReactTransitionGroup />} />
-            <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
-            <Route path="/autoComplete" element={<AutoComplete />} />
-            <Route path="/fileExplorer" element={<FileExplorer />} />
-            <Route path="/virtualList" element={<VirtualizedList />} />
-            <Route path="/trafficLights" element={<TrafficLight />} />
-            <Route path="/digitalClock" element={<Clock />} />
-            <Route path="/jobPostings" element={<JobPostings />} />
-            <Route path="/reactQuery" element={<ReactQuery />} />
-            <Route path="/preFetch" element={<PreFetch />} />
-            <Route path="/preFetchSWR" element={<SWR />} />
-          </Routes>
-        </Router>
-      </QueryClientProvider>
+              <Route path="/googleSignIn" element={<GoogleSign />} />
+              <Route path="/EventBubbling" element={<EventBubbling />} />
+              <Route
+                path="/Accordion"
+                element={
+                  <Accordion title={"Custom Accordion"} content={Div()} />
+                }
+              />
+              <Route
+                path="/Table"
+                element={
+                  <TableComponent
+                    data={data}
+                    columns={columns}
+                    rowsPerPage={10}
+                  />
+                }
+              />
+              <Route path="/Reacthooks" element={<Reacthooks />} />
+              <Route path="/Print" element={<Print />} />
+              <Route path="/voice" element={<SearchableTable />} />
+              <Route
+                path="/ReactTransition"
+                element={<ReactTransitionGroup />}
+              />
+              <Route path="/ProgressiveImage" element={<ProgressiveImage />} />
+              <Route path="/autoComplete" element={<AutoComplete />} />
+              <Route path="/fileExplorer" element={<FileExplorer />} />
+              <Route path="/virtualList" element={<VirtualizedList />} />
+              <Route path="/trafficLights" element={<TrafficLight />} />
+              <Route path="/digitalClock" element={<Clock />} />
+              <Route path="/jobPostings" element={<JobPostings />} />
+              <Route path="/reactQuery" element={<ReactQuery />} />
+              <Route path="/preFetch" element={<PreFetch />} />
+              <Route path="/preFetchSWR" element={<SWR />} />
+            </Routes>
+          </Router>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </>
   );
 }
