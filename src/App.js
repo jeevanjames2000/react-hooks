@@ -29,6 +29,7 @@ import PreFetch from "./components/PreFetch";
 import SWR from "./components/preFetchSWR";
 import Main from "./Main";
 import { ErrorBoundary } from "react-error-boundary";
+import Youtube from "./Youtube";
 
 function App() {
   function Div() {
@@ -160,7 +161,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Main />} />
-
+              <Route path="/Youtube" element={<Youtube />} />
               <Route path="/googleSignIn" element={<GoogleSign />} />
               <Route path="/EventBubbling" element={<EventBubbling />} />
               <Route

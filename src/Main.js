@@ -19,6 +19,7 @@ export default function Main() {
     { name: "Job Postings", link: "jobPostings" },
     { name: "reactQuery", link: "reactQuery" },
     { name: "PreFetch SWR", link: "preFetchSWR" },
+    { name: "Youtube", link: "Youtube" },
   ];
 
   return (
