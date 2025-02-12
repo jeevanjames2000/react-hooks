@@ -129,12 +129,12 @@ function App() {
     },
     { id: 30, col1: "good vibes", col2: "positive energy", col3: "happy days" },
   ];
-  const ErrorFallback = (error) => {
-    console.log("error: ", error);
+  const ErrorFallback = ({ error }) => {
+    console.log("Error caught by ErrorBoundary:", error);
     return (
       <div>
         <h2>Something went wrong.</h2>
-        <p>{error.message}</p>
+        <p>{error?.message}</p>
       </div>
     );
   };
